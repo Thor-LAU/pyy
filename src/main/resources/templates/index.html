@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="utf-8">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Pyy专属登录</title>
+
+    <link rel="stylesheet" type="text/css" href="../static/dependence/css/style1.css">
+    <link rel="stylesheet" href="../static/dependence/sweetalert/sweetalert.css">
+    <script type="text/javascript" src="../static/dependence/js/jquery.min.js"></script>
+    <script type="text/javascript" src="../static/dependence/js/vector.js"></script>
+    <script src="../static/dependence/sweetalert/sweetalert.min.js"></script>
+    <script src="../static/dependence/sweetalert/sweetalert-dev.js"></script>
+    <script src="../static/dependence/vue/vue.js"></script>
+    <script src="../static/dependence/js/utils.js"></script>
+</head>
+<body>
+
+
+<div id="container">
+    <div id="output">
+        <div class="containerT">
+            <h1>Happy Birthday To U(￣▽￣)～■干杯□～(￣▽￣)</h1>
+            <form class="form" id="entry_form">
+                <input type="text" placeholder="账号" id="entry_name">
+                <input type="password" placeholder="密码" id="entry_password">
+
+                <button type="button" id="entry_btn" type="button" @click="onSubmit">Login!(๑•̀ㅂ•́)و✧</button>
+
+                <div id="prompt" class="prompt"></div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    new Vue({
+        el: '#app',
+        data: function() {
+            return {
+                visible: false,
+                form: {
+                    name: '',
+                    passwd: ''
+                }
+            }
+        },
+        methods: {
+            onSubmit() {
+                axios({
+                    method:'post',
+                    url:'/login/query',
+                    params: {
+                        name: this.form.name,
+                        passwd: this.form.passwd
+                    }
+                }).then(function(res){
+                    if (res.data.respCode === 0x00101001){
+                        utils.alertSuccess("登录成功");
+                    } else {
+                        utils.alertFail(res.data.respDesc);
+                    }
+                });
+            }
+        }
+    })
+</script>
+</body>
+</html>
