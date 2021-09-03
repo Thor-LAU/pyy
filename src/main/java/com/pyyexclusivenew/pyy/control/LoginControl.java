@@ -32,6 +32,8 @@ public class LoginControl {
     @PostMapping(value = "/query")
     public Object queryUser(@RequestParam(value = "name", required = false) String name,
                         @RequestParam(value = "passwd", required = false) String passwd) throws Exception{
+        log.info("usernName: {}", name);
+        log.info("userPasswd: {}", passwd);
         return iloginService.selectByName(name,passwd);
     }
 }

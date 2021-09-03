@@ -20,6 +20,10 @@ public enum CodeEnum {
             0x00101006, "用户信息重复存在，请删除多余重复用户"),
     PASSWD_ERROR(
             0x00101007, "密码错误，请重新输入"),
+    USER_NAME_IS_NULL(
+            0x00101008, "用户名不能为空"),
+    USER_PASSWD_IS_NULL(
+            0x00101009, "密码不能为空"),
     ;
     private int code;
     private String desc;

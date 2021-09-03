@@ -8,31 +8,43 @@
     <link rel="stylesheet" href="../static/dependence/bootstrap-5.1.0-dist/css/bootstrap.css">
     <link rel="stylesheet" href="../static/dependence/sweetalert/sweetalert.css">
     <link rel="stylesheet" href="../static/dependence/css/buttons.css">
+    <link rel="stylesheet" href="../static/dependence/bootstrap-notify-3.1.3/animate.css"/>
+    <!-- 引入组件库 -->
     <script src="../static/dependence/js/jquery-3.6.0.js"></script>
     <script src="../static/dependence/bootstrap-5.1.0-dist/js/bootstrap.js"></script>
     <script src="../static/dependence/vue/vue.js"></script>
-    <!-- 引入组件库 -->
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
     <script src="../static/dependence/axios-v0.16.2/axios.min.js"></script>
     <script src="../static/dependence/sweetalert/sweetalert.min.js"></script>
     <script src="../static/dependence/sweetalert/sweetalert-dev.js"></script>
+    <script src="../static/dependence/bootstrap-notify-3.1.3/bootstrap-notify.js"></script>
     <script src="../static/dependence/js/utils.js"></script>
-    <script src =" https://lf1-cdn-tos.bytegoofy.com/obj/iconpark/icons_3238_3.027f0e4b873dbe374b3fc09df9e4fb03.es5.js "></script>
+    <script src="https://lf1-cdn-tos.bytegoofy.com/obj/iconpark/icons_3238_5.afeaf26ab939c5c63d7febee868e5339.es5.js "></script>
 </head>
 <body style="background-image: url(../static/dependence/img/4gGNeYcvfMK8iPs9.png);background-repeat: no-repeat;background-attachment:fixed; background-size: 100% 100%">
 <div style="width: 100%;height: 100%;position: fixed;top: 0;left: 0;z-index: 999">
     <div style="width: 100%;height: 100%">
-        <div id="app" style="width: 400px;height: 300px;text-align: center;position: absolute;top: 50%;left: 50%;margin: -150px 0 0 -200px;border-radius: 3px">
-            <el-form ref="form" :model="form" label-width="80px">
-                <el-form-item label="登录名">
-                    <el-input v-model="form.name"></el-input>
-                </el-form-item>
-                <el-form-item label="登录密码">
-                    <el-input v-model="form.passwd"></el-input>
+        <div id="app"
+             style="width: 400px;height: 300px;text-align: center;position: absolute;top: 50%;left: 50%;margin: -150px 0 0 -200px;border-radius: 3px">
+            <el-form ref="form" :model="form">
+                <el-form-item>
+                    <el-input placeholder="请输入用户名" v-model="form.name" clearable>
+                        <i slot="prepend">
+                            <iconpark-icon name="user"></iconpark-icon>
+                        </i>
+                    </el-input>
                 </el-form-item>
                 <el-form-item>
-<!--                    button button-glow button-border button-circle button-rounded button-primary  带光晕的按钮-->
-                    <el-button type="button button-large button-circle button-plain button-borderless" style="text-align: center" @click="onSubmit">
+                    <el-input placeholder="请输入密码" v-model="form.passwd" clearable show-password>
+                        <i slot="prepend">
+                            <iconpark-icon name="key"></iconpark-icon>
+                        </i>
+                    </el-input>
+                </el-form-item>
+                <el-form-item>
+                    <!--                    button button-glow button-border button-circle button-rounded button-primary  带光晕的按钮-->
+                    <el-button type="button button-large button-circle button-plain button-borderless"
+                               style="text-align: center" @click="onSubmit">
                         <iconpark-icon type="button" name="correct-2g449a32"></iconpark-icon>
                     </el-button>
                 </el-form-item>
@@ -43,7 +55,7 @@
 <script>
     new Vue({
         el: '#app',
-        data: function() {
+        data: function () {
             return {
                 visible: false,
                 form: {
@@ -54,15 +66,24 @@
         },
         methods: {
             onSubmit() {
+                var self = this.form;
+                if (self.name === null || self.name === ""){
+                    utils.notifyDanger("用户名不能为空，请输入！");
+                    return false;
+                }
+                if (self.passwd === null || self.passwd === ""){
+                    utils.notifyDanger("密码不能为空，请输入！");
+                    return false
+                }
                 axios({
-                    method:'post',
-                    url:'/login/query',
+                    method: 'post',
+                    url: '/login/query',
                     params: {
-                        name: this.form.name,
-                        passwd: this.form.passwd
+                        name: self.name,
+                        passwd: self.passwd
                     }
-                }).then(function(res){
-                    if (res.data.respCode === 0x00101001){
+                }).then(function (res) {
+                    if (res.data.respCode === 0x00101001) {
                         utils.alertSuccess("登录成功");
                     } else {
                         utils.alertFail(res.data.respDesc);

@@ -4,6 +4,27 @@
  * @Desc HTML工具类
  */
 var utils = {
+    notifyDanger: function (msg) {
+        $.notify({
+                message: msg
+            }, {
+                type: "danger",
+                placement: {
+                    from: "top",
+                    align: "center"
+                },
+                delay: 1000
+            }
+        )
+    },
+    notifyInfo: function (msg) {
+        $.notify({
+            message: msg
+        }, {
+            type: 'info',
+            delay: 5000
+        });
+    },
     alert: function (msg) {
         swal({
             title: '',
