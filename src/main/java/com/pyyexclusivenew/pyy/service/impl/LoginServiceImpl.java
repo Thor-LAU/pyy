@@ -36,7 +36,6 @@ public class LoginServiceImpl implements ILoginService {
             return new BaseResponse(CodeEnum.USER_PASSWD_IS_NULL);
         }
         List<Login> user = loginMapper.selectByName(name);
-        log.info("userSize: {}", user.size());
         if (user.size() == 0){
             return new BaseResponse(CodeEnum.NOT_EXIST);
         } else {

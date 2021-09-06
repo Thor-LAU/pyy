@@ -76,11 +76,11 @@
 
             onSubmit() {
                 var self = this.form;
-                if (self.name === null || self.name === ""){
+                if (self.name === null || self.name === "") {
                     this.open4("用户名不能为空，请输入用户名！");
                     return false;
                 }
-                if (self.passwd === null || self.passwd === ""){
+                if (self.passwd === null || self.passwd === "") {
                     this.open4("密码不能为空，请输入密码！");
                     return false
                 }
@@ -92,9 +92,8 @@
                         passwd: self.passwd
                     }
                 }).then(function (res) {
-                    var ind = this;
                     if (res.data.respCode === 0x00101001) {
-                        this.$router.push('index');
+                        window.location.href = "/login/goNext";
                     } else {
                         utils.alertFail(res.data.respDesc);
                     }
