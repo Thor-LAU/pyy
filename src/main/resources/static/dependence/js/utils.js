@@ -14,8 +14,7 @@ var utils = {
                     align: "center"
                 },
                 delay: 1000
-            }
-        )
+            });
     },
     notifyInfo: function (msg) {
         $.notify({
