@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Login</title>
     <!-- 引入样式 -->
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <link rel="stylesheet" href="../static/dependence/bootstrap-5.1.0-dist/css/bootstrap.css">
@@ -21,7 +21,7 @@
     <script src="../static/dependence/js/utils.js"></script>
     <script src="https://lf1-cdn-tos.bytegoofy.com/obj/iconpark/icons_3238_5.afeaf26ab939c5c63d7febee868e5339.es5.js "></script>
 </head>
-<body style="background-image: url(../static/dependence/img/4gGNeYcvfMK8iPs9.png);background-repeat: no-repeat;background-attachment:fixed; background-size: 100% 100%">
+<body style="background-image: url(../static/dependence/img/login.png);background-repeat: no-repeat;background-attachment:fixed; background-size: 100% 100%">
 <div style="width: 100%;height: 100%;position: fixed;top: 0;left: 0;z-index: 999">
     <div style="width: 100%;height: 100%">
         <div id="app"
@@ -94,6 +94,13 @@
                 }).then(function (res) {
                     if (res.data.respCode === 0x00101001) {
                         window.location.href = "/login/goNext";
+                    } else if (res.data.respCode === 0x00101012 ||
+                        res.data.respCode === 0x00101006 ||
+                        res.data.respCode === 0x00101013 ||
+                        res.data.respCode === 0x00101014) {
+                        utils.alertFail(res.data.respDesc).then(function (){
+                            location.reload();
+                        });
                     } else {
                         utils.alertFail(res.data.respDesc);
                     }

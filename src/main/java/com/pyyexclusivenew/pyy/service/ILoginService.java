@@ -8,5 +8,5 @@ import com.pyyexclusivenew.pyy.util.base.BaseResponse;
  * @Desc LoginService
  */
 public interface ILoginService {
-    BaseResponse selectByName(String name,String passwd) throws Exception;
+    BaseResponse selectByName(String name, String passwd, String jurisdiction) throws Exception;
 }

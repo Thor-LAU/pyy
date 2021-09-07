@@ -124,7 +124,7 @@
                         oracle中并不是，如果在oracle中需要实现自增，需要配置自增序列(Sequences)
                         identity:是否为主键
         -->
-        <table tableName="login" domainObjectName="Login">
+        <table tableName="jurisdiction" domainObjectName="Jurisdiction">
             <generatedKey column="id" sqlStatement="Mysql" identity="true" />
         </table>
     </context>

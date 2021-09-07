@@ -17,13 +17,23 @@ public enum CodeEnum {
     NOT_EXIST(
             0x00101005, "用户信息不存在"),
     MORE_EXIST(
-            0x00101006, "用户信息重复存在，请删除多余重复用户"),
+            0x00101006, "用户信息重复存在，请删除多余重复用户后再次登录"),
     PASSWD_ERROR(
             0x00101007, "密码错误，请重新输入"),
     USER_NAME_IS_NULL(
             0x00101008, "用户名不能为空"),
     USER_PASSWD_IS_NULL(
             0x00101009, "密码不能为空"),
+    USER_IS_FOR_ADMINISTRATOR(
+            0x00101010, "该用户是为管理此项目使用的，请使用后台登录"),
+    USER_IS_FOR_USER(
+            0x00101011, "该用户是为用户使用的，请使用前台登录"),
+    USER_JURISDICTION_IS_NULL(
+            0x00101012, "该用户无任何权限，请更换用户再次登录"),
+    USER_NO_JURISDICTION_FOR_THIS(
+            0x00101013, "没有该用户对应的权限，请更换用户再次登录"),
+    LOGIN_FAIL(
+            0x00101014, "登录失败，请重新登录"),
     ;
     private int code;
     private String desc;

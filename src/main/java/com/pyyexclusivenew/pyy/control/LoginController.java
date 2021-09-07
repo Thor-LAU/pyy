@@ -16,7 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @RestController
 @RequestMapping(value = "/login")
-public class LoginControl {
+public class LoginController {
     private static final Logger log = LoggerFactory.getLogger(LoginServiceImpl.class);
 
     @Autowired
@@ -32,9 +32,16 @@ public class LoginControl {
     @PostMapping(value = "/query")
     public Object queryUser(@RequestParam(value = "name", required = false) String name,
                         @RequestParam(value = "passwd", required = false) String passwd) throws Exception{
-        return iloginService.selectByName(name,passwd);
+        return iloginService.selectByName(name,passwd,"user");
     }
 
+    /**
+     * @Author ThorLau
+     * @CreateTime 2021/9/7 11:30
+     * @Desc 登陆成功跳转页面
+     * @Params []
+     * @Return org.springframework.web.servlet.ModelAndView
+     */
     @GetMapping(value = "/goNext")
     @ResponseBody
     public ModelAndView goNext(){
