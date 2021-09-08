@@ -52,6 +52,6 @@ public class AdministratorController {
     @GetMapping(value = "/goNext")
     @ResponseBody
     public ModelAndView goNext(){
-        return new ModelAndView("mainP");
+        return new ModelAndView("administratorMain");
     }
 }
