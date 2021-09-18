@@ -47,6 +47,19 @@ public class LoginController {
     public ModelAndView goNext(){
         return new ModelAndView("mainP");
     }
+
+    /**
+     * @Author ThorLau
+     * @CreateTime 2021/9/18 17:17
+     * @Desc
+     * @Params []
+     * @Return org.springframework.web.servlet.ModelAndView
+     */
+    @GetMapping()
+    @ResponseBody
+    public ModelAndView login(){
+        return new ModelAndView("index");
+    }
 }
 
 

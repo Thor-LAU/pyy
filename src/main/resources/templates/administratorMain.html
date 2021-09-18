@@ -27,21 +27,8 @@
     </script>
 </head>
 <body>
-<!--
-<el-container>
-  <el-header>Header</el-header>
-  <el-container>
-    <el-aside width="200px">Aside</el-aside>
-    <el-main>Main</el-main>
-  </el-container>
-</el-container>
--->
 <body style="height: 100%;width: 100%">
 <div id="app" style="width: 100%;height: 100%;position: fixed;top: 0;left: 0;z-index: 999">
-    <!-- 此处加上标题 -->
-    <!--    <el-header style="height: 10%;width:100%;background-color: #fff">-->
-    <!--        dsadasd-->
-    <!--    </el-header>-->
     <el-container style="width: 100%;height: 100%">
         <el-aside style="height: 100%;width: 250px">
             <el-row class="tac">
@@ -80,50 +67,11 @@
                              :key="item.id"
                              :label="item.title"
                              :name="item.name" style="width: 100%;height: 100%">
-                    <!--                    <el-header style="text-align: left; font-size: 12px;height: 60px">-->
-                    <!--                        <el-dropdown>-->
-                    <!--                            <i class="el-icon-setting" style="margin-right: 15px"></i>-->
-                    <!--                            <el-dropdown-menu slot="dropdown">-->
-                    <!--                                <el-dropdown-item>查看</el-dropdown-item>-->
-                    <!--                                <el-dropdown-item>新增</el-dropdown-item>-->
-                    <!--                                <el-dropdown-item>删除</el-dropdown-item>-->
-                    <!--                            </el-dropdown-menu>-->
-                    <!--                        </el-dropdown>-->
-                    <!--                        <span>王小虎</span>-->
-                    <!--                    </el-header>-->
-
-                    <!--                    <el-main s>-->
                     <iframe :src="item.path" style="width: 100%;height: 450px"></iframe>
-                    <!--                    </el-main>-->
                 </el-tab-pane>
             </el-tabs>
         </el-container>
     </el-container>
-    <!--    <el-row class="tac">-->
-    <!--        <el-col :span="12" style="height: 100%;width: 200px">-->
-    <!--            <el-menu default-active="2" style="height:100vh;width:230px;float:left;overflow-y:auto;"-->
-    <!--                     class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" background-color="#545c64"-->
-    <!--                     text-color="#fff" active-text-color="#ffd04b">-->
-    <!--                <div class="user-menu-box" v-for="menu in menus" :key="menu.id">-->
-    <!--                    <el-menu-item v-if="!menu.child" :index="menu.path">-->
-    <!--                        <i :class="menu.icon"></i>-->
-    <!--                        <span slot="title" v-text="menu.name"></span>-->
-    <!--                    </el-menu-item>-->
-    <!--                    <el-submenu v-if="menu.child" :index="menu.path">-->
-    <!--                        <template slot="title">-->
-    <!--                            <icon :name="menu.icon" :w="20" :h="20"></icon>-->
-    <!--                            <span slot="title" v-text="menu.name"></span>-->
-    <!--                        </template>-->
-    <!--                        <el-menu-item-group>-->
-    <!--                            <el-menu-item v-for="subMenu in menu.child" :key="subMenu.id" v-text="subMenu.name"-->
-    <!--                                          :index="subMenu.path"></el-menu-item>-->
-    <!--                        </el-menu-item-group>-->
-    <!--                    </el-submenu>-->
-    <!--                </div>-->
-    <!--            </el-menu>-->
-    <!--        </el-col>-->
-    <!--    </el-row>-->
-    <!--    <content-frame :page-src="menu.path"></content-frame>-->
 </div>
 <script>
     new Vue({
@@ -141,7 +89,7 @@
                     id: '1',
                     name: '首页',
                     icon: 'el-icon-s-home',
-                    path: 'https://www.baidu.com',
+                    path: '/administratorMain',
                     child: [{
                         id: '1-1',
                         name: '轮播图',
@@ -179,7 +127,7 @@
                 editableTabs: [{
                     title: '首页',
                     name: '1',
-                    path: 'https://www.baidu.com'
+                    path: '/userManagement'
                 }],
                 tabIndex: 1
             }
