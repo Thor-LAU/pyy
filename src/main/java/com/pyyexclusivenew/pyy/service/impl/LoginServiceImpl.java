@@ -11,11 +11,10 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /*
  * @Author ThorLau
@@ -34,6 +33,9 @@ public class LoginServiceImpl implements ILoginService {
 
     @Autowired
     public JurisdictionMapper jurisdictionMapper;
+
+    @Autowired
+    private RedisTemplate redisTemplate;//引入Redis
 
     @Override
     public BaseResponse selectByName(String name, String passwd ,String users) throws Exception{
@@ -69,7 +71,7 @@ public class LoginServiceImpl implements ILoginService {
                     }
                 }
                 if (jurisdiction.getJurisdiction().equals(users)){
-                    return new BaseResponse(CodeEnum.ALL_SUCCESS);
+                    return new BaseResponse(CodeEnum.ALL_SUCCESS,user);
                 } else {
                     if (users.equals("user")){
                         return new BaseResponse(CodeEnum.USER_IS_FOR_ADMINISTRATOR);

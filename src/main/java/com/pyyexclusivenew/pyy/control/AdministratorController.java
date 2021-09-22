@@ -1,12 +1,23 @@
 package com.pyyexclusivenew.pyy.control;
 
+import com.pyyexclusivenew.pyy.entity.Login;
 import com.pyyexclusivenew.pyy.service.ILoginService;
 import com.pyyexclusivenew.pyy.service.impl.LoginServiceImpl;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.pyyexclusivenew.pyy.util.base.BaseResponse;
+import com.pyyexclusivenew.pyy.util.code.CodeEnum;
+import com.sun.org.apache.bcel.internal.classfile.Code;
+import javafx.beans.binding.ObjectBinding;
+import org.slf4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/administrator")
@@ -29,6 +40,9 @@ public class AdministratorController {
     @Autowired
     ILoginService iloginService;
 
+    @Autowired
+    RedisTemplate redisTemplate;
+
     /*
      * @Author ThorLau
      * @CreateTime 2021/8/31 16:12
@@ -37,9 +51,19 @@ public class AdministratorController {
      * @Return java.lang.Object
      */
     @PostMapping(value = "/query")
-    public Object queryUser(@RequestParam(value = "name", required = false) String name,
-                            @RequestParam(value = "passwd", required = false) String passwd) throws Exception{
-        return iloginService.selectByName(name,passwd,"administrator");
+    public Object queryUser(HttpServletRequest request) throws Exception {
+        //编码问题
+        request.setCharacterEncoding("utf-8");
+        //拿到数据
+        String name = request.getParameter("name");
+        String passwd = request.getParameter("passwd");
+        BaseResponse baseResponse = iloginService.selectByName(name,passwd,"administrator");
+        if (baseResponse.getRespCode() == CodeEnum.ALL_SUCCESS.getCode()){
+            redisTemplate.opsForValue().set(request.getSession().getId()//key
+                     ,baseResponse.getRespData()//value
+            );
+        }
+        return baseResponse;
     }
 
     /**
@@ -53,5 +77,11 @@ public class AdministratorController {
     @ResponseBody
     public ModelAndView goNext(){
         return new ModelAndView("administratorMain");
+    }
+
+    @GetMapping(value = "/querySession")
+    @ResponseBody
+    public Object querySession(HttpServletRequest request){
+        return redisTemplate.opsForValue().get(request.getSession().getId());
     }
 }
