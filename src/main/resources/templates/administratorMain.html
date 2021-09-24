@@ -19,8 +19,7 @@
     <script src="../static/dependence/sweetalert/sweetalert-dev.js"></script>
     <script src="../static/dependence/bootstrap-notify-3.1.3/bootstrap-notify.js"></script>
     <script src="../static/dependence/js/utils.js"></script>
-    <script src="https://lf1-cdn-tos.bytegoofy.com/obj/iconpark/icons_3238_7.94bf83dedf7f3ec5f5f1bdfc5712b0c7.es5.js"></script>
-    }
+    <script src="https://lf1-cdn-tos.bytegoofy.com/obj/iconpark/icons_3238_9.f6cf5988c3a19957b0dbcbfa66fb8a1e.es5.js"></script>
     </script>
 </head>
 <body>
@@ -31,16 +30,19 @@
                   src="../static/dependence/img/img.png"></el-image>
         <div style="margin: 30px 30px 0 0;float: right">
             <iconpark-icon size="36" name="me"></iconpark-icon>
-            <el-dropdown trigger="click" style="float: right">
+            <el-dropdown trigger="click" style="float: right" @command="handleCommand">
                 <span class="el-dropdown-link" style="color: #06e4ff;font-size: 24px;padding: 0 0 0 10px">
                     {{user.name}}<i class="el-icon-arrow-down el-icon--right"></i>
                 </span>
-                <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item icon="el-icon-plus">黄金糕</el-dropdown-item>
-                    <el-dropdown-item icon="el-icon-circle-plus">狮子头</el-dropdown-item>
-                    <el-dropdown-item icon="el-icon-circle-plus-outline">螺蛳粉</el-dropdown-item>
-                    <el-dropdown-item icon="el-icon-check">双皮奶</el-dropdown-item>
-                    <el-dropdown-item icon="el-icon-circle-check">蚵仔煎</el-dropdown-item>
+                <el-dropdown-menu slot="dropdown" style="background-color: #545c64;border-color: #545c64">
+                    <el-dropdown-item style="color: #06e4ff">
+                        <iconpark-icon name="edit"></iconpark-icon>
+                        修改密码
+                    </el-dropdown-item>
+                    <el-dropdown-item style="color: #06e4ff" command="logout">
+                        <iconpark-icon name="logout"></iconpark-icon>
+                        退出
+                    </el-dropdown-item>
                 </el-dropdown-menu>
             </el-dropdown>
         </div>
@@ -77,12 +79,14 @@
         </el-aside>
 
         <el-container style="width: 100%;height: 100%">
-            <el-tabs v-model="editableTabsValue" style="width: 100%;height: 100%" type="card" closable
+            <el-tabs v-model="editableTabsValue" style="width: 100%;height: 100%" type="card"
                      @tab-remove="removeTab">
                 <el-tab-pane v-for="(item, index) in editableTabs"
                              :key="item.id"
                              :label="item.title"
-                             :name="item.name" style="width: 100%;height: 100%">
+                             :name="item.name"
+                             :closable="item.close"
+                             style="width: 100%;height: 100%">
                     <iframe :src="item.path" style="width: 100%;height: 450px"></iframe>
                 </el-tab-pane>
             </el-tabs>
@@ -109,45 +113,55 @@
                     id: '1',
                     name: '首页',
                     icon: 'el-icon-s-home',
-                    path: '/administratorMain',
+                    path: '/administratorMain'
+                }, {
+                    id: '2',
+                    name: '系统管理',
+                    icon: 'el-icon-s-tools',
+                    path: '/backstage/yunManage',
                     child: [{
-                        id: '1-1',
+                        id: '2-1',
+                        name: '用户管理',
+                        path: '/backstage/protaManage/turns',
+                        // formatter: function () {
+                        //     return '<iconpark-icon name="config"></iconpark-icon>';
+                        // }
+                    }]
+                }, {
+                    id: '3',
+                    name: '管理菜单',
+                    icon: 'el-icon-menu',
+                    path: '/backstage/menusManage',
+                    child: [{
+                        id: '3-1',
                         name: '轮播图',
                         path: '/backstage/protaManage/turns'
                     }, {
-                        id: '1-2',
+                        id: '3-2',
                         name: '基础数据',
                         path: '/backstage/protaManage/basis'
                     }, {
-                        id: '1-3',
+                        id: '3-3',
                         name: '分类管理',
                         path: '/backstage/protaManage/classify'
                     }, {
-                        id: '1-4',
+                        id: '3-4',
                         name: '内容发布',
                         path: '/backstage/protaManage/content'
                     }]
                 }, {
-                    id: '2',
-                    name: '我的云盘',
-                    icon: 'yunpan',
-                    path: '/backstage/yunManage'
-                }, {
-                    id: '3',
-                    name: '管理菜单',
-                    icon: 'shezhi',
-                    path: '/backstage/menusManage'
-                }, {
                     id: '4',
                     name: '编辑板块',
-                    icon: 'fabuzhongxin',
+                    icon: 'el-icon-paperclip',
                     path: '/backstage/editPlate'
                 }],
                 editableTabsValue: '1',
                 editableTabs: [{
+                    id:'1',
                     title: '首页',
                     name: '1',
-                    path: '/userManagement'
+                    path: '/userManagement',
+                    close: false
                 }],
                 tabIndex: 1
             }
@@ -171,7 +185,7 @@
                     //取得当前已打开的tab页
                     let tabs = this.editableTabs;
                     let flag = true;//表示可以新打开
-                    tabs.forEach((tab, index) => {
+                    tabs.forEach((tab) => {
                         if (tab.title === data.name) {
                             //如果打开则选中
                             this.editableTabsValue = tab.name;
@@ -185,7 +199,8 @@
                         this.editableTabs.push({
                             title: data.name,
                             name: newTabName,
-                            path: data.url
+                            path: data.url,
+                            close: true
                         });
                         this.editableTabsValue = newTabName;
                     }
@@ -208,6 +223,11 @@
                 this.editableTabsValue = activeName;
                 this.editableTabs = tabs.filter(tab => tab.name !== targetName);
             },
+            handleCommand(command) {
+                if (command === "logout") {
+                    window.location.href = '/administrator/logOut';
+                }
+            }
         },
         mounted() {
             this.load();

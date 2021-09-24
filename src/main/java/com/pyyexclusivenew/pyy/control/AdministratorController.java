@@ -16,6 +16,7 @@ import javax.servlet.http.*;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/administrator")
@@ -48,7 +49,7 @@ public class AdministratorController {
      * @Params [java.lang.String, java.lang.String]
      * @Return java.lang.Object
      */
-    @PostMapping(value = "/query")
+    @PostMapping(value = "/login")
     public Object queryUser(HttpServletRequest request) throws Exception {
         //编码问题
         request.setCharacterEncoding("utf-8");
@@ -81,5 +82,19 @@ public class AdministratorController {
     @ResponseBody
     public Object querySession(HttpServletRequest request){
         return redisTemplate.opsForValue().get(request.getSession().getId());
+    }
+
+    @RequestMapping(value = "/isValid",method = RequestMethod.GET)
+    public String isSessionValid(HttpServletRequest request){
+        //简化if-else表达式（其实很多地方可以简化的，这里为了方便新手朋友可以看得顺畅点，我尽量不简化）
+        return request.isRequestedSessionIdValid() ? "ok":"no";
+    }
+
+    @GetMapping(value = "/logOut")
+    @ResponseBody
+    public ModelAndView logOut(HttpSession session){
+        log.info("GO GO GO1");
+        session.invalidate();
+        return new ModelAndView("adminiStrator");
     }
 }
